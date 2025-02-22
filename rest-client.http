@@ -1,0 +1,35 @@
+### User signup
+POST http://localhost:4000/users/signup
+Content-Type: application/json
+
+{
+  "name": "jemmy",
+  "email": "mg@mail.com",
+  "password": "Jem12345678."
+}
+
+### User login
+POST http://localhost:4000/users/signin
+Content-Type: application/json
+
+{
+  "email": "mg@mail.com",
+  "password": "Jem12345678."
+}
+
+### Songs
+GET http://localhost:4000/songs
+
+### Create a new song
+POST http://localhost:4000/songs
+Content-Type: application/json
+
+{
+  "title": "song4",
+  "duration": "04:02",
+  "artists": ["artist7", "artist8"],
+  "releaseDate": "2024-01-01"
+}
+
+### Get a single song
+GET http://localhost:4000/songs/3
