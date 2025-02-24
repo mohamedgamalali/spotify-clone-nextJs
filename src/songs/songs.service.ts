@@ -1,35 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSongDTO } from './dto/create-song.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateSongDto } from './dto/create-song.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Songs } from './songs.entity';
+import { Repository } from 'typeorm';
+import { PaginationDto } from '../common/pagination/pagination.dto';
+
 @Injectable()
 export class SongsService {
-  private songs: CreateSongDTO[] = [
-    {
-      title: 'song1',
-      duration: '1:2',
-      artists: ['artist1', 'artist2'],
-      releaseDate: new Date('2024-01-01'),
-    },
-    {
-      title: 'song2',
-      duration: '2:2',
-      artists: ['artist3', 'artist4'],
-      releaseDate: new Date('2024-01-01'),
-    },
-    {
-      title: 'song3',
-      duration: '3:2',
-      artists: ['artist5', 'artist6'],
-      releaseDate: new Date('2024-01-01'),
-    },
-  ];
-  getSongs(): CreateSongDTO[] {
-    return this.songs;
+  @InjectRepository(Songs)
+  private readonly songsRepository: Repository<Songs>;
+
+  async getSongs(pagination: PaginationDto): Promise<{
+    items: Songs[];
+    total: number;
+    page: number;
+    lastPage: number;
+  }> {
+    const { page, limit } = pagination;
+    const [items, total] = await this.songsRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
+    return {
+      items,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
-  createSong(song: CreateSongDTO): CreateSongDTO[] {
-    this.songs.push(song);
-    return this.songs;
+  async createSong(song: CreateSongDto): Promise<Songs> {
+    const newSong = this.songsRepository.create(song);
+    return this.songsRepository.save(newSong);
   }
-  getSingleSong(index: number): CreateSongDTO {
-    return this.songs[index];
+  async getSingleSong(id: string): Promise<Songs> {
+    const song = await this.songsRepository.findOne({ where: { id } });
+    if (!song) {
+      throw new NotFoundException('Song not found');
+    }
+    return song;
   }
 }

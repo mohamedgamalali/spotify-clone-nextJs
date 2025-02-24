@@ -1,25 +1,35 @@
 import {
-  IsString,
   IsArray,
-  IsDateString,
   IsNotEmpty,
   IsMilitaryTime,
+  IsOptional,
+  IsString,
 } from 'class-validator';
+import { OmitType } from '@nestjs/mapped-types';
+import { Songs } from '../songs.entity';
 
-export class CreateSongDTO {
-  @IsString()
-  @IsNotEmpty({ message: 'Title is required' })
-  readonly title: string;
+export class CreateSongDto extends OmitType(Songs, ['id']) {
+  @IsNotEmpty()
+  @IsArray()
+  artists: string[];
 
   @IsMilitaryTime()
-  @IsNotEmpty({ message: 'Duration is required' })
-  readonly duration: string;
+  @IsNotEmpty()
+  duration: string;
 
-  @IsArray()
-  @IsNotEmpty({ message: 'Artists are required' })
-  readonly artists: string[];
+  @IsNotEmpty()
+  @IsString()
+  title: string;
 
-  @IsDateString()
-  @IsNotEmpty({ message: 'Release date is required' })
-  readonly releaseDate: Date;
+  @IsNotEmpty()
+  @IsString()
+  album: string;
+
+  @IsNotEmpty()
+  @IsString()
+  genre: string;
+
+  @IsOptional()
+  @IsString()
+  lyrics: string;
 }

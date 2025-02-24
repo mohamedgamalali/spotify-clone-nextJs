@@ -7,6 +7,8 @@ import { DevConfigService } from './common/providers/DevConfigService';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { PlayListModule } from './play-list/play-list.module';
+import { DataSource } from 'typeorm';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -22,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     SongsModule,
     UsersModule,
+    PlayListModule,
   ],
   controllers: [AppController],
   providers: [
@@ -39,7 +42,10 @@ import { ConfigModule } from '@nestjs/config';
   ],
 })
 export class AppModule implements NestModule {
+  constructor(private dataSource: DataSource) {
+    console.log('Connected to database: ', dataSource.driver.database);
+  }
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('songs');
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }

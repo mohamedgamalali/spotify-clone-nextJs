@@ -3,8 +3,8 @@ POST http://localhost:4000/users/signup
 Content-Type: application/json
 
 {
-  "name": "jemmy",
-  "email": "mg@mail.com",
+  "name": "jemmy2",
+  "email": "mg2@mail.com",
   "password": "Jem12345678."
 }
 
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### Songs
-GET http://localhost:4000/songs
+GET http://localhost:4000/songs?page=1&limit=10
 
 ### Create a new song
 POST http://localhost:4000/songs
@@ -28,8 +28,26 @@ Content-Type: application/json
   "title": "song4",
   "duration": "04:02",
   "artists": ["artist7", "artist8"],
-  "releaseDate": "2024-01-01"
+  "album": "album4",
+  "genre": "genre4"
 }
 
 ### Get a single song
-GET http://localhost:4000/songs/3
+GET http://localhost:4000/songs/2743733e-cb4f-449f-b66b-f4a697a69045
+
+### Create a new playlist
+POST http://localhost:4000/play-list
+Content-Type: application/json
+
+{
+  "name": "playlist1",
+  "songs": ["2743733e-cb4f-449f-b66b-f4a697a69045"],
+  "user": "35c1f159-910c-499c-ac7d-47984da4427b",
+  "description": "description1"
+}
+
+### Get all playlists
+GET http://localhost:4000/play-list
+
+### Get a single playlist
+GET http://localhost:4000/play-list/dc848ed1-155d-4717-bcb8-22837e4b0ede
