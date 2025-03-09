@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { PlayListModule } from './play-list/play-list.module';
 import { DataSource } from 'typeorm';
+import { ArtistModule } from './artist/artist.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -25,6 +27,7 @@ import { DataSource } from 'typeorm';
     SongsModule,
     UsersModule,
     PlayListModule,
+    ArtistModule,
   ],
   controllers: [AppController],
   providers: [

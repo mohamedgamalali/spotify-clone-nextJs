@@ -1,10 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PlayList } from './play-list.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { Songs } from '../songs/songs.entity';
 import { Users } from '../users/users.entity';
 import { CreatePlayListDto } from './dto/create-playlist.dto';
+import { JwtPayload } from '../users/constants';
 
 @Injectable()
 export class PlayListService {
@@ -17,7 +22,15 @@ export class PlayListService {
   @InjectRepository(Users)
   private readonly usersRepository: Repository<Users>;
 
-  async create(playList: CreatePlayListDto): Promise<PlayList> {
+  async create(
+    playList: CreatePlayListDto,
+    req: Request & { user: JwtPayload },
+  ): Promise<PlayList> {
+    if (playList.user !== req.user.id) {
+      throw new ForbiddenException(
+        'You are not allowed to create a playlist for another user',
+      );
+    }
     const user = await this.usersRepository.findOne({
       where: { id: playList.user },
     });

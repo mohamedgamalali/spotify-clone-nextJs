@@ -13,23 +13,37 @@ POST http://localhost:4000/users/signin
 Content-Type: application/json
 
 {
-  "email": "mg@mail.com",
+  "email": "mg2@mail.com",
   "password": "Jem12345678."
 }
 
+### Create an artist
+POST http://localhost:4000/artist
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM1YzFmMTU5LTkxMGMtNDk5Yy1hYzdkLTQ3OTg0ZGE0NDI3YiIsImVtYWlsIjoibWdAbWFpbC5jb20iLCJpYXQiOjE3NDEyOTk4NTMsImV4cCI6MTc0MTM4NjI1M30.pw_CD74lhocHEBQUAA1EUCQD5w4983TkaSR4PyChqEw
+
+{
+  "name": "gemmy"
+}
+
+### Get artists
+GET http://localhost:4000/artist?page=1&limit=10&searchTerm=gemmy
+
 ### Songs
-GET http://localhost:4000/songs?page=1&limit=10
+GET http://localhost:4000/songs?page=2&limit=10
 
 ### Create a new song
 POST http://localhost:4000/songs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM1YzFmMTU5LTkxMGMtNDk5Yy1hYzdkLTQ3OTg0ZGE0NDI3YiIsImVtYWlsIjoibWdAbWFpbC5jb20iLCJhcnRpc3RJZCI6IjBiZjk0YjFiLTcxODctNGM4Yy05ZDcyLTY2M2FiZmMwNjNlMCIsImlhdCI6MTc0MTQ1MTI0MCwiZXhwIjoxNzQxNTM3NjQwfQ.d2AAtf6Z6VO5hLnC35W23vQecQ-6Q13BeHrjpgYSILQ
 
 {
   "title": "song4",
   "duration": "04:02",
-  "artists": ["artist7", "artist8"],
+  "artists": ["1431585f-68f9-422c-82e5-06b7c3fdec5d", "15333f60-e1cb-476b-b443-75ce7a1196a1"],
   "album": "album4",
-  "genre": "genre4"
+  "genre": "genre4",
+  "lyrics": "lyrics4"
 }
 
 ### Get a single song
@@ -38,6 +52,7 @@ GET http://localhost:4000/songs/2743733e-cb4f-449f-b66b-f4a697a69045
 ### Create a new playlist
 POST http://localhost:4000/play-list
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM1YzFmMTU5LTkxMGMtNDk5Yy1hYzdkLTQ3OTg0ZGE0NDI3YiIsImVtYWlsIjoibWdAbWFpbC5jb20iLCJpYXQiOjE3NDEyOTk4NTMsImV4cCI6MTc0MTM4NjI1M30.pw_CD74lhocHEBQUAA1EUCQD5w4983TkaSR4PyChqEw
 
 {
   "name": "playlist1",

@@ -4,13 +4,13 @@ import {
   IsMilitaryTime,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
-import { OmitType } from '@nestjs/mapped-types';
-import { Songs } from '../songs.entity';
 
-export class CreateSongDto extends OmitType(Songs, ['id']) {
+export class CreateSongDto {
   @IsNotEmpty()
   @IsArray()
+  @IsUUID('4', { each: true })
   artists: string[];
 
   @IsMilitaryTime()

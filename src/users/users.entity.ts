@@ -1,9 +1,11 @@
+import { Artist } from '../artist/artist.entity';
 import { PlayList } from '../play-list/play-list.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -16,7 +18,7 @@ export class Users {
   @Column('varchar', { length: 255 })
   name: string;
 
-  @Column('varchar', { length: 255 })
+  @Column('varchar', { length: 255, unique: true })
   email: string;
 
   @Column('varchar', { length: 255 })
@@ -30,4 +32,7 @@ export class Users {
 
   @OneToMany(() => PlayList, (playlist) => playlist.user)
   playlists: PlayList[];
+
+  @OneToOne(() => Artist, (artist) => artist.user)
+  artist: Artist;
 }
